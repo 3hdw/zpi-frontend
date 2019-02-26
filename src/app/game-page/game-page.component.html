@@ -1,0 +1,28 @@
+<div id="game-container" class="container-fluid">
+  <div class="row text-center">
+    <div class="col-4">
+      <div class="row">
+        <h3>Twój wynik: 9999</h3>
+      </div>
+      <div class="row">
+        <app-letter-pool></app-letter-pool>
+      </div>
+    </div>
+    <div class="col-8">
+      <table align="center">
+        <tbody>
+        <tr *ngFor="let tableRow of gameState; let i = index">
+          <td *ngFor="let cell of tableRow; let j = index">
+            <div #dropSpot class="drop-spot" (drop)="onDrop($event,dropSpot,i,j)"
+                 (dragover)="onDragOver($event,dropSpot,i,j)"
+                 (dragenter)="onDragEnter($event,dropSpot,i,j)"
+                 (dragleave)="onDragLeave($event,dropSpot,i,j)">
+              <app-letter *ngIf="cell" id="letter" [letter]="cell"></app-letter>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

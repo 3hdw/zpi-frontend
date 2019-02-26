@@ -1,0 +1,14 @@
+<div>
+  <table>
+    <tbody>
+    <tr>
+      <td *ngFor="let item of letterPool; let i = index">
+        <div class="visible" #block draggable="true" (dragstart)="dragStart($event,block,i,item)"
+             (dragend)="dragEnd($event, block, i,item)">
+          <app-letter *ngIf="item" [letter]="item"></app-letter>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

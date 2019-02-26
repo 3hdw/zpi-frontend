@@ -1,0 +1,35 @@
+#main {
+  min-height: 100vh;
+}
+
+.fill-width {
+  width: 100%;
+}
+
+.mtop-1 {
+  margin: 1rem 0 0 0;
+}
+
+.mtop-2 {
+  margin: 1.5rem 0 0 0;
+}
+
+.mtop-3 {
+  margin: 3rem 0 0 0;
+}
+
+.mtop-4 {
+  margin: 4rem 0 0 0;
+}
+
+.mtop-5 {
+  margin: 5rem 0 0 0;
+}
+
+.mtop-10 {
+  margin: 8rem 0 0 0;
+}
+
+.mtop-20 {
+  margin: 15rem 0 0 0;
+}
