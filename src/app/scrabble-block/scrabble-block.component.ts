@@ -3,10 +3,10 @@ import {Letter} from '../models/Letter';
 
 @Component({
   selector: 'app-letter',
-  templateUrl: './letter.component.html',
-  styleUrls: ['./letter.component.css']
+  templateUrl: './scrabble-block.component.html',
+  styleUrls: ['./scrabble-block.component.css']
 })
-export class LetterComponent implements OnInit {
+export class ScrabbleBlockComponent implements OnInit {
 
   @Input() letter: Letter = null;
 

@@ -13,7 +13,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 import { GamePageComponent } from './game-page/game-page.component';
-import { LetterComponent } from './letter/letter.component';
+import { ScrabbleBlockComponent } from './scrabble-block/scrabble-block.component';
 import { LetterPoolComponent } from './letter-pool/letter-pool.component';
 
 @NgModule({
@@ -29,7 +29,7 @@ import { LetterPoolComponent } from './letter-pool/letter-pool.component';
     FooterComponent,
     SideMenuComponent,
     GamePageComponent,
-    LetterComponent,
+    ScrabbleBlockComponent,
     LetterPoolComponent,
   ],
   imports: [

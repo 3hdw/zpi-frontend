@@ -21,6 +21,10 @@ td{
   background-color: #ddd3b7;
 }
 
+tr:nth-child(8) td:nth-child(8){
+  background-color: black;
+}
+
 h3{
   text-align: left;
 }
@@ -31,7 +35,11 @@ h3{
 }
 
 .over{
- border: dashed black 2px;
+ border: dashed green 2px;
   background-color: gray;
+}
+
+.wrong {
+  border: solid red 2px;
 }
 

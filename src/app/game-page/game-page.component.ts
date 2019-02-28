@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FetchDataService} from '../fetch-data.service';
 import {Letter} from '../models/Letter';
+import {GameManagerService} from '../game-manager.service';
 
 @Component({
   selector: 'app-game-page',
@@ -9,37 +10,45 @@ import {Letter} from '../models/Letter';
 })
 export class GamePageComponent implements OnInit {
 
-  gameState: Letter [][] = [];
-
-  constructor(private fetchService: FetchDataService) {
+  constructor(public gameManager: GameManagerService) {
   }
 
   ngOnInit() {
-    this.initGameState();
-  }
-
-  initGameState() {
-    this.fetchService.getMockGameState().subscribe(
-      data => this.gameState = data
-    );
+    this.gameManager.initBoard();
   }
 
   onDrop(event, dropSpot, i, j) {
-    console.log('drop');
-    dropSpot.className = 'dropSpot';
+    if (this.gameManager.wasCoorectDraggable) {
+      if (this.gameManager.gameBoard[i][j] == null) {
+        this.gameManager.wasCorrectMove = true;
+      }
+      dropSpot.className = 'drop-spot';
+    }
   }
 
   onDragOver(event, dropSpot, i, j) {
     event.preventDefault();
+    if (this.gameManager.wasCoorectDraggable) {
+      if (this.gameManager.gameBoard[i][j] != null) {
+        dropSpot.className = dropSpot.className + ' wrong';
+      }
+    }
   }
 
   onDragEnter(event, dropSpot, i, j) {
     event.preventDefault();
-    dropSpot.className += ' over';
+    if (this.gameManager.wasCoorectDraggable) {
+      if (this.gameManager.gameBoard[i][j] == null) {
+        dropSpot.className += ' over';
+      } else {
+        dropSpot.className += ' wrong';
+      }
+    }
   }
 
   onDragLeave(event, dropSpot, i, j) {
-    dropSpot.className = 'drop-spot';
+    if (this.gameManager.wasCoorectDraggable) {
+      dropSpot.className = 'drop-spot';
+    }
   }
-
 }

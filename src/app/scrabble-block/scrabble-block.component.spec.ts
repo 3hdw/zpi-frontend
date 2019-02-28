@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LetterComponent } from './letter.component';
+import { ScrabbleBlockComponent } from './scrabble-block.component';
 
-describe('LetterComponent', () => {
-  let component: LetterComponent;
-  let fixture: ComponentFixture<LetterComponent>;
+describe('ScrabbleBlockComponent', () => {
+  let component: ScrabbleBlockComponent;
+  let fixture: ComponentFixture<ScrabbleBlockComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LetterComponent ]
+      declarations: [ ScrabbleBlockComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LetterComponent);
+    fixture = TestBed.createComponent(ScrabbleBlockComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
