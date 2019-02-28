@@ -1,14 +1,9 @@
 <div id="game-container" class="container-fluid">
-  <div class="row text-center">
-    <div class="col-4">
-      <div class="row">
-        <h3>Twój wynik: 9999</h3>
-      </div>
-      <div class="row">
-        <app-letter-pool></app-letter-pool>
-      </div>
+  <div class="row">
+    <div class="col-5">
+        <app-game-panel></app-game-panel>
     </div>
-    <div class="col-8">
+    <div class="col-7">
       <table align="center">
         <tbody>
         <tr *ngFor="let tableRow of gameManager.gameBoard; let i = index">
@@ -17,7 +12,7 @@
                  (dragover)="onDragOver($event,dropSpot,i,j)"
                  (dragenter)="onDragEnter($event,dropSpot,i,j)"
                  (dragleave)="onDragLeave($event,dropSpot,i,j)">
-              <app-letter *ngIf="cell" id="letter" [letter]="cell"></app-letter>
+              <app-scrabble-block *ngIf="cell" id="letter" [letter]="cell"></app-scrabble-block>
             </div>
           </td>
         </tr>

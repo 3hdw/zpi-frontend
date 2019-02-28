@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LetterPoolComponent } from './letter-pool.component';
+import { GamePanelComponent } from './game-panel.component';
 
-describe('LetterPoolComponent', () => {
-  let component: LetterPoolComponent;
-  let fixture: ComponentFixture<LetterPoolComponent>;
+describe('GamePanelComponent', () => {
+  let component: GamePanelComponent;
+  let fixture: ComponentFixture<GamePanelComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LetterPoolComponent ]
+      declarations: [ GamePanelComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LetterPoolComponent);
+    fixture = TestBed.createComponent(GamePanelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

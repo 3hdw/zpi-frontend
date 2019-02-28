@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FetchDataService} from '../fetch-data.service';
 import {Letter} from '../models/Letter';
 import {GameManagerService} from '../game-manager.service';
+import {Pair} from '../models/Pair';
 
 @Component({
   selector: 'app-game-page',
@@ -18,9 +19,11 @@ export class GamePageComponent implements OnInit {
   }
 
   onDrop(event, dropSpot, i, j) {
-    if (this.gameManager.wasCoorectDraggable) {
-      if (this.gameManager.gameBoard[i][j] == null) {
-        this.gameManager.wasCorrectMove = true;
+    const scrabbleBlock = JSON.parse(event.dataTransfer.getData('scrabbleBlock'));
+    if (this.gameManager.checkDraggable()) {
+      if (this.gameManager.gameBoard[i][j] === null) {
+        this.gameManager.gameBoard[i][j] = new Letter(scrabbleBlock._character);
+        this.gameManager.addUnconfirmedCord({first: i, second: j});
       }
       dropSpot.className = 'drop-spot';
     }
@@ -28,16 +31,18 @@ export class GamePageComponent implements OnInit {
 
   onDragOver(event, dropSpot, i, j) {
     event.preventDefault();
-    if (this.gameManager.wasCoorectDraggable) {
+    if (this.gameManager.checkDraggable()) {
       if (this.gameManager.gameBoard[i][j] != null) {
         dropSpot.className = dropSpot.className + ' wrong';
+        event.dataTransfer.dropEffect = 'none';
+      } else {
+        event.dataTransfer.dropEffect = 'move';
       }
     }
   }
 
   onDragEnter(event, dropSpot, i, j) {
-    event.preventDefault();
-    if (this.gameManager.wasCoorectDraggable) {
+    if (this.gameManager.checkDraggable()) {
       if (this.gameManager.gameBoard[i][j] == null) {
         dropSpot.className += ' over';
       } else {
@@ -47,7 +52,7 @@ export class GamePageComponent implements OnInit {
   }
 
   onDragLeave(event, dropSpot, i, j) {
-    if (this.gameManager.wasCoorectDraggable) {
+    if (this.gameManager.checkDraggable()) {
       dropSpot.className = 'drop-spot';
     }
   }

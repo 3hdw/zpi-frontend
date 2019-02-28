@@ -14,7 +14,7 @@ import { FooterComponent } from './footer/footer.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 import { GamePageComponent } from './game-page/game-page.component';
 import { ScrabbleBlockComponent } from './scrabble-block/scrabble-block.component';
-import { LetterPoolComponent } from './letter-pool/letter-pool.component';
+import { GamePanelComponent } from './game-panel/game-panel.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,7 @@ import { LetterPoolComponent } from './letter-pool/letter-pool.component';
     SideMenuComponent,
     GamePageComponent,
     ScrabbleBlockComponent,
-    LetterPoolComponent,
+    GamePanelComponent,
   ],
   imports: [
     BrowserModule,

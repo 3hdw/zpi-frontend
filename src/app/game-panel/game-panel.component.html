@@ -1,0 +1,24 @@
+<div>
+  <h3>Twój wynik: 9999</h3>
+</div>
+<div>
+  <h3>Obecne słowo: </h3>
+</div>
+<div>
+  <button class="btn btn-danger" (click)="reset()">Reset</button>
+</div>
+<div>
+  <h3>Twoje literki: </h3>
+  <table>
+    <tbody>
+    <tr>
+      <td *ngFor="let item of gameManager.letterPool; let i = index">
+        <div class="visible" #block draggable="true" (dragstart)="dragStart($event,block,item)"
+             (dragend)="dragEnd($event, block, i)">
+          <app-scrabble-block *ngIf="item" [letter]="item"></app-scrabble-block>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

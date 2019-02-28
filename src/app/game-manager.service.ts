@@ -1,52 +1,60 @@
 import {Injectable} from '@angular/core';
 import {FetchDataService} from './fetch-data.service';
 import {Letter} from './models/Letter';
+import {Pair} from './models/Pair';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameManagerService {
-
   gameBoard: Letter[][] = [];
   letterPool: Letter[] = [];
+  private unconfirmedLetters: Letter[] = [];
+  private unconfirmedCords: Pair<number>[] = [];
+  private isCorrectDraggable = false;
 
-  private _wasCorrectMove = false;
-  private _wasCoorectDraggable = false;
-
-  constructor(private fetchDataSerivce: FetchDataService) {
+  constructor(private fetchDataService: FetchDataService) {
   }
 
   initBoard() {
-    this.fetchDataSerivce.getMockGameState().subscribe(
+    this.fetchDataService.getMockGameState().subscribe(
       data => this.gameBoard = data
     );
   }
 
   initPool() {
-    this.fetchDataSerivce.getMockLetterPool().subscribe(
-      data => this.letterPool = data
+    this.fetchDataService.getMockLetterPool().subscribe(
+      data => {
+        this.letterPool = data;
+      }
     );
   }
 
-
-  set wasCorrectMove(value: boolean) {
-    this._wasCorrectMove = value;
+  checkDraggable(): boolean {
+    return this.isCorrectDraggable;
   }
 
-  checkMove(): boolean {
-    if (this._wasCorrectMove) {
-      this._wasCorrectMove = false;
-      return true;
+  setCorrectDraggable(isCorrect: boolean) {
+    this.isCorrectDraggable = isCorrect;
+  }
+
+  resetUnconfirmed() {
+    this.unconfirmedLetters = [];
+    for (const pair of this.unconfirmedCords) {
+      this.gameBoard[pair.first][pair.second] = null;
     }
-    return false;
+    this.unconfirmedCords = [];
   }
 
-  set wasCoorectDraggable(value: boolean) {
-    this._wasCoorectDraggable = value;
+  getUnconfirmedBlocks(): Letter[] {
+    return this.unconfirmedLetters;
   }
 
+  addUnconfirmedBlock(letter: Letter) {
+    this.unconfirmedLetters.push(letter);
+  }
 
-  get wasCoorectDraggable(): boolean {
-    return this._wasCoorectDraggable;
+  addUnconfirmedCord(pair: Pair<number>) {
+    this.unconfirmedCords.push(pair);
   }
 }
