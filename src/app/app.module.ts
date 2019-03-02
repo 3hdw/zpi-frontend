@@ -15,6 +15,10 @@ import { SideMenuComponent } from './side-menu/side-menu.component';
 import { GamePageComponent } from './game-page/game-page.component';
 import { ScrabbleBlockComponent } from './scrabble-block/scrabble-block.component';
 import { GamePanelComponent } from './game-panel/game-panel.component';
+import { TestPageComponent } from './test-page/test-page.component';
+import {HttpClientModule} from '@angular/common/http';
+import { RegisterPageComponent } from './register-page/register-page.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -31,10 +35,15 @@ import { GamePanelComponent } from './game-panel/game-panel.component';
     GamePageComponent,
     ScrabbleBlockComponent,
     GamePanelComponent,
+    TestPageComponent,
+    RegisterPageComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

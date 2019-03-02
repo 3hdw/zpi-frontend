@@ -6,6 +6,8 @@ import {CreateRoomPageComponent} from './create-room-page/create-room-page.compo
 import {JoinRoomPageComponent} from './join-room-page/join-room-page.component';
 import {LoginPageComponent} from './login-page/login-page.component';
 import {GamePageComponent} from './game-page/game-page.component';
+import {TestPageComponent} from './test-page/test-page.component';
+import {RegisterPageComponent} from './register-page/register-page.component';
 
 const routes: Routes = [
   {path: 'home', component: StartPageComponent},
@@ -13,7 +15,9 @@ const routes: Routes = [
   {path: 'create', component: CreateRoomPageComponent},
   {path: 'join', component: JoinRoomPageComponent},
   {path: 'login', component: LoginPageComponent},
+  {path: 'register', component: RegisterPageComponent},
   {path: 'play', component: GamePageComponent},
+  {path: 'test', component: TestPageComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: '**', redirectTo: '/home'}
 ];
