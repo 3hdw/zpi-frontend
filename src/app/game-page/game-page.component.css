@@ -1,9 +1,12 @@
-table, th, td {
-  border: 2px solid #ef8558;
+th, td {
+  border: 2px solid gray;
 }
 
 table {
   border-collapse: collapse;
+  border: 3px solid black;
+  box-shadow: 3px 3px 3px 3px rgba(0,0,0,0.5);
+
 }
 
 td div {
@@ -18,12 +21,15 @@ td div {
 td {
   margin: 0;
   padding: 0;
-  background-color: #ddd3b7;
+  background-image: url("../../assets/icons/BG.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 tr:nth-child(8) td:nth-child(8) {
-  background-image: url(../../assets/icons/star.svg);
+  background-image: url(../../assets/icons/STAR3.png);
   background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 /*TRIPLE WORD SCORE*/
@@ -31,7 +37,9 @@ tr:nth-child(1) td:nth-child(1), tr:nth-child(1) td:nth-child(8), tr:nth-child(1
 tr:nth-child(8) td:nth-child(1), tr:nth-child(8) td:nth-child(15),
 tr:nth-child(15) td:nth-child(1), tr:nth-child(15) td:nth-child(8), tr:nth-child(15) td:nth-child(15)
 {
-  background-color: red;
+  background-image: url("../../assets/icons/TW.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 /*DOUBLE WORD SCORE*/
@@ -43,7 +51,9 @@ tr:nth-last-child(2) td:nth-child(2), tr:nth-last-child(2) td:nth-child(14),
 tr:nth-last-child(3) td:nth-child(3), tr:nth-last-child(3) td:nth-child(13),
 tr:nth-last-child(4) td:nth-child(4), tr:nth-last-child(4) td:nth-child(12),
 tr:nth-last-child(5) td:nth-child(5), tr:nth-last-child(5) td:nth-child(11){
-  background-color: hotpink;
+  background-image: url("../../assets/icons/DW.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 /*TRIPLE LETTER SCORE*/
@@ -51,7 +61,9 @@ tr:nth-child(2) td:nth-child(6), tr:nth-child(2) td:nth-child(10),
 tr:nth-child(6) td:nth-child(2), tr:nth-child(6) td:nth-child(6), tr:nth-child(6) td:nth-child(10), tr:nth-child(6) td:nth-child(14),
 tr:nth-child(10) td:nth-child(2), tr:nth-child(10) td:nth-child(6), tr:nth-child(10) td:nth-child(10), tr:nth-child(10) td:nth-child(14),
 tr:nth-last-child(2) td:nth-child(6), tr:nth-last-child(2) td:nth-child(10){
-  background-color: blue;
+  background-image: url("../../assets/icons/TL.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 /*DOUBLE LETTER SCORE*/
@@ -65,18 +77,9 @@ tr:nth-child(12) td:nth-child(1),tr:nth-child(12) td:nth-child(8),tr:nth-child(1
 tr:nth-child(13) td:nth-child(7),tr:nth-child(13) td:nth-child(9),
 tr:nth-child(15) td:nth-child(4),tr:nth-child(15) td:nth-last-child(4)
 {
-  background-color: #88cde6;
-}
-
-.arrow-right {
-  width: 0;
-  height: 0;
-  border-top: 9px solid transparent;
-  border-bottom: 9px solid transparent;
-  border-left: 9px solid #ffbead;
-  float: right;
-  margin-top: 27px;
-  margin-right: -14px;
+  background-image: url("../../assets/icons/DL.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 h3 {
