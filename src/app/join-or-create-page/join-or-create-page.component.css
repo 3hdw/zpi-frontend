@@ -1,4 +1,9 @@
 button {
-  padding: 50px;
+  padding: 10px;
   font-size: 1.5em;
+  width: 300px;
+}
+
+.menu-row{
+  margin-top: 5px;
 }

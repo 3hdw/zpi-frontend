@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {MockRoom} from './models/MockRoom';
 import {Observable, of} from 'rxjs';
 import {Letter} from './models/Letter';
+import {HttpHeaders} from '@angular/common/http';
+import {AddressStorageService} from './address-storage.service';
 
 export const MOCK_ROOMS: MockRoom[] = [
   {id: 's123aqwd', freeSlots: 5, maxSlots: 10, ping: 1, level: 'Trudny'},
@@ -46,10 +48,21 @@ export const MOCK_LETTER_POOL: Letter[] = [
   new Letter('h'), new Letter('w'), new Letter('o'), new Letter('r'), new Letter('l'), new Letter('d')
 ];
 
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'}),
+};
+
 @Injectable({
   providedIn: 'root'
 })
 export class FetchDataService {
+
+  constructor(private addressStorage: AddressStorageService) {
+  }
+
+  getLobbies(){
+
+  }
 
   getMockRooms(): Observable<MockRoom[]> {
     return of(MOCK_ROOMS);
@@ -61,8 +74,5 @@ export class FetchDataService {
 
   getMockLetterPool(): Observable<Letter[]> {
     return of(MOCK_LETTER_POOL);
-  }
-
-  constructor() {
   }
 }

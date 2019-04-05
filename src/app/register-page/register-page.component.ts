@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserManagerService} from '../user-manager.service';
 import {Router} from '@angular/router';
+import {AuthManagerService} from '../auth-manager.service';
 
 @Component({
   selector: 'app-register-page',
@@ -17,7 +18,8 @@ export class RegisterPageComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private userManager: UserManagerService,
-              private router: Router) {
+              private router: Router,
+              private authManager: AuthManagerService) {
   }
 
   ngOnInit() {
@@ -27,8 +29,8 @@ export class RegisterPageComponent implements OnInit {
   buildForm() {
     this.registerForm = this.formBuilder.group({
       email: [''],
-      nickname: [],
-      password: [],
+      nickname: ['', Validators.required],
+      password: ['', Validators.required],
       id: [0]
     });
   }
@@ -38,7 +40,7 @@ export class RegisterPageComponent implements OnInit {
     this.userManager.registerPlayer(this.registerForm.value).subscribe(
       next => {
         this.hasFailed = false;
-        this.router.navigate(['/home']);
+        this.authManager.login(this.registerForm.value['nickname'], this.registerForm.value['password'], this.userManager, this.router);
       },
       err => {
         this.isLoading = false;
