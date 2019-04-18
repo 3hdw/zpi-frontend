@@ -1,0 +1,33 @@
+table {
+  display: table;
+  border-collapse: separate;
+  border-spacing: 2px;
+  border-color: grey;
+}
+
+.cell {
+  min-width: 66px;
+  min-height: 64px;
+  max-width: 66px;
+  max-height: 64px;
+  width: 66px;
+  height: 64px;
+}
+
+.img-v{
+  min-width: 46px;
+  min-height: 64px;
+  max-width: 46px;
+  max-height: 64px;
+  width: 46px;
+  height: 64px;
+}
+
+.img-h{
+  min-width: 66px;
+  min-height: 44px;
+  max-width: 66px;
+  max-height: 44px;
+  width: 66px;
+  height: 44px;
+}

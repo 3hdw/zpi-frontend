@@ -2,23 +2,25 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { StartPageComponent } from './start-page/start-page.component';
+import { StartPageComponent } from './pages/start-page/start-page.component';
 import { AppRoutingModule } from './app-routing.module';
-import { JoinRoomPageComponent } from './join-room-page/join-room-page.component';
-import { CreateRoomPageComponent } from './create-room-page/create-room-page.component';
-import { JoinOrCreatePageComponent } from './join-or-create-page/join-or-create-page.component';
-import { LoginPageComponent } from './login-page/login-page.component';
-import { LoadingScreenComponent } from './loading-screen/loading-screen.component';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import { SideMenuComponent } from './side-menu/side-menu.component';
-import { GamePageComponent } from './game-page/game-page.component';
-import { ScrabbleBlockComponent } from './scrabble-block/scrabble-block.component';
-import { GamePanelComponent } from './game-panel/game-panel.component';
-import { TestPageComponent } from './test-page/test-page.component';
+import { JoinRoomPageComponent } from './pages/join-room-page/join-room-page.component';
+import { CreateRoomPageComponent } from './pages/create-room-page/create-room-page.component';
+import { JoinOrCreatePageComponent } from './pages/join-or-create-page/join-or-create-page.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { LoadingScreenComponent } from './elements/loading-screen/loading-screen.component';
+import { HeaderComponent } from './elements/header/header.component';
+import { FooterComponent } from './elements/footer/footer.component';
+import { SideMenuComponent } from './elements/side-menu/side-menu.component';
+import { GamePageComponent } from './pages/game-page/game-page.component';
+import { ScrabbleBlockComponent } from './elements/scrabble-block/scrabble-block.component';
+import { GamePanelComponent } from './elements/game-panel/game-panel.component';
+import { TestPageComponent } from './pages/test-page/test-page.component';
 import {HttpClientModule} from '@angular/common/http';
-import { RegisterPageComponent } from './register-page/register-page.component';
+import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { PlayerGamesPageComponent } from './pages/player-games-page/player-games-page.component';
+import { LobbyPageComponent } from './pages/lobby-page/lobby-page.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     GamePanelComponent,
     TestPageComponent,
     RegisterPageComponent,
+    PlayerGamesPageComponent,
+    LobbyPageComponent,
   ],
   imports: [
     BrowserModule,

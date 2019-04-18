@@ -1,23 +1,27 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {StartPageComponent} from './start-page/start-page.component';
-import {JoinOrCreatePageComponent} from './join-or-create-page/join-or-create-page.component';
-import {CreateRoomPageComponent} from './create-room-page/create-room-page.component';
-import {JoinRoomPageComponent} from './join-room-page/join-room-page.component';
-import {LoginPageComponent} from './login-page/login-page.component';
-import {GamePageComponent} from './game-page/game-page.component';
-import {TestPageComponent} from './test-page/test-page.component';
-import {RegisterPageComponent} from './register-page/register-page.component';
-import {AuthGuardService} from './auth-guard.service';
+import {StartPageComponent} from './pages/start-page/start-page.component';
+import {JoinOrCreatePageComponent} from './pages/join-or-create-page/join-or-create-page.component';
+import {CreateRoomPageComponent} from './pages/create-room-page/create-room-page.component';
+import {JoinRoomPageComponent} from './pages/join-room-page/join-room-page.component';
+import {LoginPageComponent} from './pages/login-page/login-page.component';
+import {GamePageComponent} from './pages/game-page/game-page.component';
+import {TestPageComponent} from './pages/test-page/test-page.component';
+import {RegisterPageComponent} from './pages/register-page/register-page.component';
+import {AuthGuardService} from './services/auth-guard.service';
+import {PlayerGamesPageComponent} from './pages/player-games-page/player-games-page.component';
+import {LobbyPageComponent} from './pages/lobby-page/lobby-page.component';
 
 const routes: Routes = [
   {path: 'home', component: StartPageComponent},
-  {path: 'jorcr', component: JoinOrCreatePageComponent, canActivate: [AuthGuardService]},
-  {path: 'create', component: CreateRoomPageComponent, canActivate: [AuthGuardService]},
+  {path: 'menu', component: JoinOrCreatePageComponent, canActivate: [AuthGuardService]},
+  {path: 'create', component: LobbyPageComponent, canActivate: [AuthGuardService]},
   {path: 'join', component: JoinRoomPageComponent, canActivate: [AuthGuardService]},
   {path: 'login', component: LoginPageComponent},
+  {path: 'lobby/:name', component: LobbyPageComponent, canActivate: [AuthGuardService]},
   {path: 'register', component: RegisterPageComponent},
   {path: 'play', component: GamePageComponent, canActivate: [AuthGuardService]},
+  {path: 'player-games', component: PlayerGamesPageComponent, canActivate: [AuthGuardService]},
   {path: 'test', component: TestPageComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: '**', redirectTo: '/home'}

@@ -1,0 +1,26 @@
+<div id="main" class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card shadow-lg">
+        <div class="card-header bg-danger text-center text-uppercase">
+          <h3 class="card-title">{{data[0]!=null?data[0].name:'Game lobby'}}</h3>
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item" *ngFor="let player of data[1]">{{player.nickname}}</li>
+          </ul>
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-6">
+              <button class="btn btn-outline-success fill-width" [disabled]="data[1].length<=1" (click)="onStartClicked()">START</button>
+            </div>
+            <div class="col-6">
+              <button class="btn btn-outline-danger fill-width" (click)="onQuitClicked(data[0].name)">Wyjdź</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
