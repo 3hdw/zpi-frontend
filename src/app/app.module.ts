@@ -21,6 +21,7 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { PlayerGamesPageComponent } from './pages/player-games-page/player-games-page.component';
 import { LobbyPageComponent } from './pages/lobby-page/lobby-page.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { LobbyPageComponent } from './pages/lobby-page/lobby-page.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

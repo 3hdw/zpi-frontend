@@ -1,30 +1,38 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AddressStorageService} from './address-storage.service';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import {AuthManagerService} from './auth-manager.service';
 import {BehaviorSubject} from 'rxjs';
+import {SocketMessage} from '../models/api/SocketMessage';
+import {v4 as uuid} from 'uuid';
+import {audit} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebSocketService {
   private stompClient;
-  private _fetchedLobbyName = new BehaviorSubject<string>('');
-  fetchedLobbyName$ = this._fetchedLobbyName.asObservable();
+  private socketMessage = new BehaviorSubject<string>('');
+  socketMessage$ = this.socketMessage.asObservable();
 
   constructor(private addressStorage: AddressStorageService, private authManager: AuthManagerService) {
   }
 
-  initializeWebSocketConnection(lobbyName: string): void {
-    const ws = new SockJS(this.addressStorage.apiAddress + '/socket');
+
+  connectToLobbyWebSocket(lobbyName: string): void {
+    const that = this;
+    const ws = new SockJS(this.addressStorage.apiAddress + '/socket', null, {
+      sessionId: function (): string {
+        return that.authManager.playerId + ':' + lobbyName + ':' + uuid();
+      }
+    });
     this.stompClient = Stomp.over(ws);
     this.stompClient.debug = null;
-    const that = this;
-    this.stompClient.connect({}, function () {
-      that.stompClient.subscribe('/lobby', (message) => {
+    this.stompClient.connect({lobby: lobbyName}, function () {
+      that.stompClient.subscribe('/lobby/' + lobbyName, (message) => {
         if (message.body) {
-          that._fetchedLobbyName.next(message.body);
+          that.socketMessage.next(message.body);
         }
       });
     });

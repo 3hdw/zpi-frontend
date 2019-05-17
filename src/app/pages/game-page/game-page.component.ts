@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FetchDataService} from '../../services/fetch-data.service';
 import {Letter} from '../../models/Letter';
 import {GameManagerService} from '../../services/game-manager.service';
-import {Pair} from '../../models/Pair';
+import {ShareDataService} from '../../services/share-data.service';
+import {GameDTO} from '../../models/api/GameDTO';
+import {FetchDataService} from '../../services/fetch-data.service';
 
 @Component({
   selector: 'app-game-page',
@@ -11,11 +12,19 @@ import {Pair} from '../../models/Pair';
 })
 export class GamePageComponent implements OnInit {
 
-  constructor(public gameManager: GameManagerService) {
+  private game: GameDTO = null;
+
+  constructor(public gameManager: GameManagerService, private shareDataService: ShareDataService, private fetchDataService: FetchDataService) {
+  }
+
+  mockMove() {
+    this.fetchDataService.makeMove(this.game.name, this.gameManager.gameBoardToMap());
   }
 
   ngOnInit() {
+    this.game = this.shareDataService.game;
     this.gameManager.initBoard();
+    console.log(this.game);
   }
 
   onDrop(event, dropSpot, i, j) {

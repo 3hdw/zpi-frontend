@@ -13,7 +13,8 @@
         <div class="card-footer">
           <div class="row">
             <div class="col-6">
-              <button class="btn btn-outline-success fill-width" [disabled]="data[1].length<=1" (click)="onStartClicked()">START</button>
+              <!--[disabled]="data[1].length<=1"-->
+              <button class="btn btn-outline-success fill-width" (click)="onStartClicked()">START</button>
             </div>
             <div class="col-6">
               <button class="btn btn-outline-danger fill-width" (click)="onQuitClicked(data[0].name)">Wyjdź</button>

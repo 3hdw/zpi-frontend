@@ -6,25 +6,42 @@ import {UtilsService} from '../../services/utils.service';
 import {WebSocketService} from '../../services/web-socket.service';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
+import {SocketMessage} from '../../models/api/SocketMessage';
+import {GameDTO} from '../../models/api/GameDTO';
+import {ShareDataService} from '../../services/share-data.service';
+import {CanDeactivate} from '../../models/CanDeactivate';
 
 @Component({
   selector: 'app-lobby-page',
   templateUrl: './lobby-page.component.html',
   styleUrls: ['./lobby-page.component.css']
 })
-export class LobbyPageComponent implements OnInit, OnDestroy {
+export class LobbyPageComponent extends CanDeactivate implements OnInit, OnDestroy {
 
   lobbyName: string;
   data: [LobbyDTO, PlayerDTO[]] = [null, []];
   private subscription: Subscription;
   private _readyPlayers: PlayerDTO[] = [];
+  private isStarted = false;
 
-  constructor(private fetchDataService: FetchDataService, private utils: UtilsService, private webSocket: WebSocketService,
-              private route: ActivatedRoute, private router: Router) {
+  constructor(private fetchDataService: FetchDataService,
+              private utils: UtilsService,
+              private webSocket: WebSocketService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private shareDataService: ShareDataService) {
+    super();
   }
 
   onStartClicked() {
-
+    this.fetchDataService.startLobby(this.lobbyName).subscribe(
+      next => {
+      },
+      error => {
+      },
+      () => {
+      }
+    );
   }
 
   onQuitClicked(lobbyName: string) {
@@ -42,37 +59,32 @@ export class LobbyPageComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
     this.webSocket.onDestroy();
+    if (!this.canDeactivate()) {
+      this.cleanUp();
+    }
   }
 
   private quit(lobbyName: string) {
-    this.fetchDataService.quitLobby(lobbyName).subscribe(
-      next => {
-        this.router.navigate(['menu']);
-      },
-      error => {
-      },
-      () => {
-      }
-    );
+    this.router.navigate(['menu']);
   }
 
   private init() {
     this.lobbyName = this.route.snapshot.paramMap.get('name');
     if (!this.lobbyName) {
-      this.createLobby();
+      this.onCreateInit();
     } else {
-      this.getLobby();
+      this.onJoinInit();
     }
   }
 
-  private createLobby() {
+  private onCreateInit() {
     this.fetchDataService.createLobby().subscribe(
       next => {
         this.data = this.utils.extractDataFromLobby(next);
         this.lobbyName = next.name;
-        this.webSocket.initializeWebSocketConnection(this.lobbyName);
-        this.subscription = this.webSocket.fetchedLobbyName$.subscribe(
-          data => this.refreshLobby(data)
+        this.webSocket.connectToLobbyWebSocket(this.lobbyName);
+        this.subscription = this.webSocket.socketMessage$.subscribe(
+          socketMessage => this.handleSocketMessage(socketMessage)
         );
       },
       error => {
@@ -82,13 +94,13 @@ export class LobbyPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getLobby() {
+  private onJoinInit() {
     this.fetchDataService.getLobby(this.lobbyName).subscribe(
       next => {
         this.data = this.utils.extractDataFromLobby(next);
-        this.webSocket.initializeWebSocketConnection(this.lobbyName);
-        this.subscription = this.webSocket.fetchedLobbyName$.subscribe(
-          data => this.refreshLobby(data)
+        this.webSocket.connectToLobbyWebSocket(this.lobbyName);
+        this.subscription = this.webSocket.socketMessage$.subscribe(
+          socketMessage => this.handleSocketMessage(socketMessage)
         );
       },
       error => {
@@ -98,17 +110,44 @@ export class LobbyPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  private refreshLobby(data: string) {
-    if (this.lobbyName.toLowerCase() === data.toLowerCase()) {
-      this.fetchDataService.getLobby(this.lobbyName).subscribe(
-        lobbyData => {
-          this.data = this.utils.extractDataFromLobby(lobbyData);
-        },
-        error => {
-        },
-        () => {
+  private handleSocketMessage(socketMessage: string) {
+    console.log('poke');
+    if (socketMessage) {
+      const socketMsg: SocketMessage = JSON.parse(socketMessage);
+      if (socketMsg.header === 'CHANGE') {
+        this.refreshLobby();
+      } else if (socketMsg.header === 'START') {
+        if (socketMsg.body) {
+          this.onStartLobby(socketMsg.body);
         }
-      );
+      } else {
+      }
     }
+  }
+
+  private refreshLobby() {
+    this.fetchDataService.getLobby(this.lobbyName).subscribe(
+      lobbyData => {
+        this.data = this.utils.extractDataFromLobby(lobbyData);
+      },
+      error => {
+      },
+      () => {
+      }
+    );
+  }
+
+  private onStartLobby(gameDto: GameDTO) {
+    this.isStarted = true;
+    this.shareDataService.game = gameDto;
+    this.router.navigate(['play']);
+  }
+
+  canDeactivate(): boolean {
+    return this.isStarted;
+  }
+
+  cleanUp() {
+    this.fetchDataService.quitLobby(this.lobbyName);
   }
 }

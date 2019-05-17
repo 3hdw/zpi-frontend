@@ -15,6 +15,7 @@ export class JoinRoomPageComponent implements OnInit {
 
   data: [LobbyDTO, PlayerDTO[]][] = [];
   isLoading = false;
+  p = 1;
 
   constructor(private fetchDataService: FetchDataService, private utils: UtilsService,
               private router: Router) {

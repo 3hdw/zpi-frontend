@@ -6,6 +6,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AddressStorageService} from './address-storage.service';
 import {LobbyDTO} from '../models/api/LobbyDTO';
 import {AuthManagerService} from './auth-manager.service';
+import {GameDTO} from '../models/api/GameDTO';
+import {Router} from '@angular/router';
 
 export const MOCK_ROOMS: MockRoom[] = [
   {id: 's123aqwd', freeSlots: 5, maxSlots: 10, ping: 1, level: 'Trudny'},
@@ -56,7 +58,28 @@ export const MOCK_LETTER_POOL: Letter[] = [
 })
 export class FetchDataService {
 
-  constructor(private addressStorage: AddressStorageService, private http: HttpClient, private authManager: AuthManagerService) {
+  constructor(private addressStorage: AddressStorageService,
+              private http: HttpClient,
+              private authManager: AuthManagerService,
+              private router: Router) {
+  }
+
+  makeMove(gameName: string, move: Map<string, string>) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.authManager.basicToken
+      })
+    };
+    const dtoMap = {};
+    move.forEach((value: string, key: string) => {
+      dtoMap[key] = value;
+    });
+    this.http.patch(this.addressStorage.apiAddress + '/games/' + gameName + '/move?playerId=' + this.authManager.playerId, dtoMap, httpOptions).subscribe(
+      next => console.log('next: ' + next),
+      error => console.log('error: ' + error),
+      () => console.log('complete')
+    );
   }
 
   getLobbies(): Observable<LobbyDTO[]> {
@@ -100,15 +123,34 @@ export class FetchDataService {
       + this.authManager.playerId, null, httpOptions);
   }
 
-  quitLobby(lobbyName: string): Observable<Object> {
+  quitLobby(lobbyName: string) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': this.authManager.basicToken
       })
     };
-    return this.http.patch<LobbyDTO>(this.addressStorage.apiAddress + '/games/' + lobbyName + '/removePlayer?playerId='
-      + this.authManager.playerId, null, httpOptions);
+    this.http.patch<LobbyDTO>(this.addressStorage.apiAddress + '/games/' + lobbyName + '/removePlayer?playerId='
+      + this.authManager.playerId, null, httpOptions).subscribe(
+      next => {
+
+      },
+      error => {
+      },
+      () => {
+      }
+    )
+    ;
+  }
+
+  startLobby(lobbyName: string): Observable<GameDTO> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.authManager.basicToken
+      })
+    };
+    return this.http.patch<GameDTO>(this.addressStorage.apiAddress + /games/ + lobbyName + '/start', null, httpOptions);
   }
 
   getMockRooms(): Observable<MockRoom[]> {

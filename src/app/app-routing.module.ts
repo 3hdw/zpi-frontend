@@ -11,14 +11,15 @@ import {RegisterPageComponent} from './pages/register-page/register-page.compone
 import {AuthGuardService} from './services/auth-guard.service';
 import {PlayerGamesPageComponent} from './pages/player-games-page/player-games-page.component';
 import {LobbyPageComponent} from './pages/lobby-page/lobby-page.component';
+import {DeactivateGuardService} from './services/deactivate-guard.service';
 
 const routes: Routes = [
   {path: 'home', component: StartPageComponent},
   {path: 'menu', component: JoinOrCreatePageComponent, canActivate: [AuthGuardService]},
-  {path: 'create', component: LobbyPageComponent, canActivate: [AuthGuardService]},
+  {path: 'create', component: LobbyPageComponent, canActivate: [AuthGuardService], canDeactivate: [DeactivateGuardService]},
   {path: 'join', component: JoinRoomPageComponent, canActivate: [AuthGuardService]},
   {path: 'login', component: LoginPageComponent},
-  {path: 'lobby/:name', component: LobbyPageComponent, canActivate: [AuthGuardService]},
+  {path: 'lobby/:name', component: LobbyPageComponent, canActivate: [AuthGuardService], canDeactivate: [DeactivateGuardService]},
   {path: 'register', component: RegisterPageComponent},
   {path: 'play', component: GamePageComponent, canActivate: [AuthGuardService]},
   {path: 'player-games', component: PlayerGamesPageComponent, canActivate: [AuthGuardService]},
