@@ -5,8 +5,8 @@ import {Injectable} from '@angular/core';
 })
 export class AddressStorageService {
 
-  // private _apiAddress = 'http://localhost:8080/api';
-  private _apiAddress = 'https://scrabbleapi.herokuapp.com/api';
+  private _apiAddress = 'http://localhost:8080/api';
+  // private _apiAddress = 'https://scrabbleapi.herokuapp.com/api';
   private _createUserEndpoint = '/players';
   private _getLobbiesEndpoint = '/games';
   private _loginEndpoint = '/players';
