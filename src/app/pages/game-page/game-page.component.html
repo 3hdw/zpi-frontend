@@ -1,8 +1,9 @@
+<app-loading-screen *ngIf="isMyMove"></app-loading-screen>
 <div id="game-container" class="container-fluid">
   <div class="row">
     <div class="col-5">
         <app-game-panel></app-game-panel>
-      <button class="btn btn-primary" (click)="mockMove()">test</button>
+      <button class="btn btn-primary" (click)="onMove()">test</button>
     </div>
     <div class="col-7">
       <table align="center">

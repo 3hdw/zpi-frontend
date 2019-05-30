@@ -2,7 +2,7 @@
   <div id="letter">
     {{letter.character}}
   </div>
-  <div id="points">
+  <div id="points" *ngIf="letter.points!=-1">
     {{letter.points}}
   </div>
 </div>

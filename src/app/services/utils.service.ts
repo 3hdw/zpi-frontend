@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {LobbyDTO} from '../models/api/LobbyDTO';
 import {PlayerDTO} from '../models/api/PlayerDTO';
+import {Letter} from '../models/Letter';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class UtilsService {
         tuple[1].push(lobbyPlayer.player);
       }
       if (tuple[0] !== null) {
-        data.push(tuple);
+        data.push(tuple);  // <- nie wiem czemu pokazuje niezgodne typy, wczesniej nie pokazywal, kompiluje sie i dziala wiec nie ruszam
       }
       tuple = [null, []];
     }
@@ -33,5 +34,13 @@ export class UtilsService {
       data[1].push(lobbyPlayer.player);
     }
     return data;
+  }
+
+  charactersToLetters(characters: string[]): Letter[] {
+    const letters: Letter[] = [];
+    for (const char of characters) {
+      letters.push(new Letter(char));
+    }
+    return letters;
   }
 }

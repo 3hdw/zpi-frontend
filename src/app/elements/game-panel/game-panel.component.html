@@ -7,7 +7,7 @@
 <div>
   <button class="btn btn-danger" (click)="reset()">Reset</button>
 </div>
-<div>
+<div *ngIf="gameManager.letterPool.length>0">
   <h3>Twoje literki: </h3>
   <table>
     <tbody>

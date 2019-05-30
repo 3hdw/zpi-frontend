@@ -15,7 +15,6 @@ export class GamePanelComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.gameManager.initPool();
   }
 
   dragStart(event, block, item: Letter) {
