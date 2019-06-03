@@ -88,6 +88,7 @@ export class LobbyPageComponent extends CanDeactivate implements OnInit, OnDestr
         );
       },
       error => {
+        console.log(error);
       },
       () => {
       }
