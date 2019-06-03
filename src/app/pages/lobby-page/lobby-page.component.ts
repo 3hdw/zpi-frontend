@@ -34,6 +34,7 @@ export class LobbyPageComponent extends CanDeactivate implements OnInit, OnDestr
   }
 
   onStartClicked() {
+    console.log('start clicked');
     this.fetchDataService.startLobby(this.lobbyName).subscribe(
       next => {
         console.log(next);
