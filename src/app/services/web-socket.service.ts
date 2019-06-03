@@ -7,6 +7,7 @@ import {BehaviorSubject} from 'rxjs';
 import {SocketMessage} from '../models/api/SocketMessage';
 import {v4 as uuid} from 'uuid';
 import {audit} from 'rxjs/operators';
+import {HttpHeaders} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class WebSocketService {
     });
     this.stompClient = Stomp.over(ws);
     this.stompClient.debug = null;
-    this.stompClient.connect({lobby: lobbyName}, function () {
+    this.stompClient.connect({}, function () {
       that.stompClient.subscribe('/lobby/' + lobbyName, (message) => {
         if (message.body) {
           that.socketMessage.next(message.body);

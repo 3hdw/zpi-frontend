@@ -13,6 +13,7 @@ export class AuthManagerService {
   private _playerId: number;
   private _loginEmitter: EventEmitter<Result> = new EventEmitter<Result>();
   private _basicToken: string;
+  private _password: string;
 
   constructor() {
   }
@@ -26,6 +27,7 @@ export class AuthManagerService {
     this._userName = userName;
     this._playerId = playerId;
     this._basicToken = 'Basic ' + btoa(this._userName + ':' + password);
+    this._password = password;
   }
 
   public login(login: string, password: string, userManager: UserManagerService, router: Router) {
@@ -41,6 +43,10 @@ export class AuthManagerService {
         this._loginEmitter.emit(new Result(true, false));
       }
     );
+  }
+
+  get password(): string {
+    return this._password;
   }
 
   get isLoggedIn(): boolean {

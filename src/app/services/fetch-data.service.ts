@@ -27,6 +27,7 @@ export class FetchDataService {
     move.forEach((value: string, key: string) => {
       dtoMap[key] = value;
     });
+
     this.http.patch(this.addressStorage.apiAddress + '/games/' + gameName + '/move?playerId=' + this.authManager.playerId, dtoMap, httpOptions).subscribe(
       next => console.log('next: ' + next),
       error => console.log('error: ', error),
