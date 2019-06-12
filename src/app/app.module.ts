@@ -16,12 +16,13 @@ import { GamePageComponent } from './pages/game-page/game-page.component';
 import { ScrabbleBlockComponent } from './elements/scrabble-block/scrabble-block.component';
 import { GamePanelComponent } from './elements/game-panel/game-panel.component';
 import { TestPageComponent } from './pages/test-page/test-page.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { PlayerGamesPageComponent } from './pages/player-games-page/player-games-page.component';
 import { LobbyPageComponent } from './pages/lobby-page/lobby-page.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {SocketInterceptorService} from './services/socket-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,13 @@ import {NgxPaginationModule} from 'ngx-pagination';
     ReactiveFormsModule,
     NgxPaginationModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SocketInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
