@@ -98,9 +98,9 @@ export class GameManagerService {
 
   move(game: GameDTO) {
     this.fetchDataService.makeMove(game.name, this.gameBoardToMap()).subscribe(
-      next => console.log('next: ', next),
+      next => {},
       error => console.log('error: ', error),
-      () => console.log('complete')
+      () => {}
     );
   }
 

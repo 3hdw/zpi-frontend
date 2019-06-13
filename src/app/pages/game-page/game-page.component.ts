@@ -31,20 +31,24 @@ export class GamePageComponent implements OnInit {
 
   ngOnInit() {
     this.game = this.shareDataService.game;
-    console.log('gameObj', this.game);
     this.gameManager.initGame(this.game);
     this.isMyMove = this.gameManager.isMyMove(this.game);
-    this.socketService.connectToGameSocket(this.game.name);
-    this.subscription = this.socketService.socketMessage$.subscribe(
-      socketMessage => this.check(socketMessage)
-    );
+    this.initSocketConnection();
   }
 
-  private check(socketMessage: string) {
+  private initSocketConnection() {
+    this.socketService.connectToGameSocket(this.game.name);
+    this.subscription = this.socketService.socketMessage$.subscribe(
+      socketMessage => this.handleSocketMessage(socketMessage)
+    );
+
+  }
+
+  private handleSocketMessage(socketMessage: string) {
     if (socketMessage) {
+      console.log('socket message', socketMessage);
       const socketMsg: SocketMessage = JSON.parse(socketMessage);
-      console.log('header', socketMsg.header);
-      console.log('body', socketMsg.body);
+      this.isMyMove = this.gameManager.isMyMove(socketMsg.body);
     }
   }
 
