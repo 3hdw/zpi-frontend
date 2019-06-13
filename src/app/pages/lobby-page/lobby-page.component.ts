@@ -23,6 +23,7 @@ export class LobbyPageComponent extends CanDeactivate implements OnInit, OnDestr
   private subscription: Subscription;
   private _readyPlayers: PlayerDTO[] = [];
   private isStarted = false;
+  isLoading = false;
 
   constructor(private fetchDataService: FetchDataService,
               private utils: UtilsService,
@@ -34,6 +35,7 @@ export class LobbyPageComponent extends CanDeactivate implements OnInit, OnDestr
   }
 
   onStartClicked() {
+    this.isLoading = true;
     console.log('start clicked');
     this.fetchDataService.startLobby(this.lobbyName).subscribe(
       next => {
@@ -41,8 +43,10 @@ export class LobbyPageComponent extends CanDeactivate implements OnInit, OnDestr
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       },
       () => {
+        this.isLoading = false;
       }
     );
   }
@@ -115,7 +119,6 @@ export class LobbyPageComponent extends CanDeactivate implements OnInit, OnDestr
   }
 
   private handleSocketMessage(socketMessage: string) {
-    console.log('poke');
     if (socketMessage) {
       const socketMsg: SocketMessage = JSON.parse(socketMessage);
       if (socketMsg.header === 'CHANGE') {

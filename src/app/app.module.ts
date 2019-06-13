@@ -23,6 +23,8 @@ import { PlayerGamesPageComponent } from './pages/player-games-page/player-games
 import { LobbyPageComponent } from './pages/lobby-page/lobby-page.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {SocketInterceptorService} from './services/socket-interceptor.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,8 @@ import {SocketInterceptorService} from './services/socket-interceptor.service';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     {

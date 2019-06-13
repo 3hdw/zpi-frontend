@@ -1,3 +1,4 @@
+<app-loading-screen *ngIf="isLoading"></app-loading-screen>
 <div id="main" class="container">
   <div class="row justify-content-center">
     <div class="col-lg-6">
@@ -13,8 +14,7 @@
         <div class="card-footer">
           <div class="row">
             <div class="col-6">
-              <!--[disabled]="data[1].length<=1"-->
-              <button class="btn btn-outline-success fill-width" (click)="onStartClicked()">START</button>
+              <button [disabled]="data[1].length<=1" class="btn btn-outline-success fill-width" (click)="onStartClicked()">START</button>
             </div>
             <div class="col-6">
               <button class="btn btn-outline-danger fill-width" (click)="onQuitClicked(data[0].name)">Wyjdź</button>

@@ -16,7 +16,7 @@ export class FetchDataService {
               private authManager: AuthManagerService) {
   }
 
-  makeMove(gameName: string, move: Map<string, string>) {
+  makeMove(gameName: string, move: Map<string, string>): Observable<Object> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -28,11 +28,7 @@ export class FetchDataService {
       dtoMap[key] = value;
     });
 
-    this.http.patch(this.addressStorage.apiAddress + '/games/' + gameName + '/move?playerId=' + this.authManager.playerId, dtoMap, httpOptions).subscribe(
-      next => console.log('next: ' + next),
-      error => console.log('error: ', error),
-      () => console.log('complete')
-    );
+    return this.http.patch(this.addressStorage.apiAddress + '/games/' + gameName + '/move?playerId=' + this.authManager.playerId, dtoMap, httpOptions);
   }
 
   getLobbies(): Observable<LobbyDTO[]> {

@@ -26,15 +26,13 @@ export class GameManagerService {
     const map: Map<string, string> = new Map<string, string>();
     for (let i = 0; i < this.gameBoard.length; i++) {
       for (let j = 0; j < this.gameBoard[i].length; j++) {
-        map.set(String.fromCharCode(65 + i).concat((j + 1).toString()),
-          this.gameBoard[i][j] !== null ? this.gameBoard[i][j].character : '');
+        if (this.gameBoard[i][j] !== null) {
+          map.set(String.fromCharCode(65 + i).concat((j + 1).toString()),
+            this.gameBoard[i][j].character);
+        }
       }
     }
     return map;
-  }
-
-  mapToGameBoard() {
-
   }
 
   initGame(game: GameDTO) {
@@ -99,14 +97,18 @@ export class GameManagerService {
   }
 
   move(game: GameDTO) {
-    this.fetchDataService.makeMove(game.name, this.gameBoardToMap());
+    this.fetchDataService.makeMove(game.name, this.gameBoardToMap()).subscribe(
+      next => console.log('next: ', next),
+      error => console.log('error: ', error),
+      () => console.log('complete')
+    );
   }
 
   isMyMove(game: GameDTO) {
     let isMyMove = false;
     for (let i = 0; i < game.players.length; i++) {
       if (game.players[i].player.nickname === this.authManager.userName) {
-        if (game.nextPlayer === i) {
+        if (game.nextPlayer !== i) {
           isMyMove = true;
           break;
         }

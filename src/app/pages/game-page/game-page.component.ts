@@ -5,6 +5,9 @@ import {ShareDataService} from '../../services/share-data.service';
 import {GameDTO} from '../../models/api/GameDTO';
 import {FetchDataService} from '../../services/fetch-data.service';
 import {AuthManagerService} from '../../services/auth-manager.service';
+import {Subscription} from 'rxjs';
+import {WebSocketService} from '../../services/web-socket.service';
+import {SocketMessage} from '../../models/api/SocketMessage';
 
 @Component({
   selector: 'app-game-page',
@@ -15,9 +18,11 @@ export class GamePageComponent implements OnInit {
 
   private game: GameDTO = null;
   isMyMove = false;
+  private subscription: Subscription;
 
   constructor(public gameManager: GameManagerService,
-              private shareDataService: ShareDataService) {
+              private shareDataService: ShareDataService,
+              private socketService: WebSocketService) {
   }
 
   onMove() {
@@ -26,9 +31,21 @@ export class GamePageComponent implements OnInit {
 
   ngOnInit() {
     this.game = this.shareDataService.game;
-    console.log(this.game);
+    console.log('gameObj', this.game);
     this.gameManager.initGame(this.game);
     this.isMyMove = this.gameManager.isMyMove(this.game);
+    this.socketService.connectToGameSocket(this.game.name);
+    this.subscription = this.socketService.socketMessage$.subscribe(
+      socketMessage => this.check(socketMessage)
+    );
+  }
+
+  private check(socketMessage: string) {
+    if (socketMessage) {
+      const socketMsg: SocketMessage = JSON.parse(socketMessage);
+      console.log('header', socketMsg.header);
+      console.log('body', socketMsg.body);
+    }
   }
 
   onDrop(event, dropSpot, i, j) {
