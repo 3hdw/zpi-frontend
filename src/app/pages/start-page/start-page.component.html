@@ -1,6 +1,7 @@
+<app-loading-screen *ngIf="isLoading"></app-loading-screen>
 <div class="container-fluid">
   <div class="row menu-row justify-content-center">
-    <button class="btn btn-danger" routerLink="/menu">Zagraj jako gość</button>
+    <button class="btn btn-danger" (click)="onGuestClick()">Zagraj jako gość</button>
   </div>
   <div class="row menu-row justify-content-center">
     <button class="btn btn-danger" routerLink="/login">Zaloguj się</button>
