@@ -1,12 +1,12 @@
 <app-loading-screen *ngIf="isMyMove"></app-loading-screen>
 <div id="game-container" class="container-fluid">
   <div class="row">
-    <div class="col-5">
+    <div class="col-4">
         <app-game-panel></app-game-panel>
-      <button class="btn btn-primary" (click)="onMove()">test</button>
+      <button class="btn btn-primary" (click)="onMove()">Wykonaj ruch</button>
     </div>
     <div class="col-7">
-      <table align="center">
+      <table>
         <tbody>
         <tr *ngFor="let tableRow of gameManager.gameBoard; let i = index">
           <td *ngFor="let cell of tableRow; let j = index">

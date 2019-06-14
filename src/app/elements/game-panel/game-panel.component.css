@@ -7,15 +7,6 @@ td div{
   max-height: 50px;
 }
 
-td div:hover{
-  width: 55px;
-  height: 55px;
-  min-width: 55px;
-  min-height: 55px;
-  max-width: 55px;
-  max-height: 55px;
-}
-
 .visible {
   visibility: visible;
 }
