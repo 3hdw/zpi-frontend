@@ -2,7 +2,7 @@
 <div id="game-container" class="container-fluid">
   <div class="row">
     <div class="col-4">
-        <app-game-panel></app-game-panel>
+        <app-game-panel [points]="points"></app-game-panel>
       <button class="btn btn-primary" (click)="onMove()">Wykonaj ruch</button>
     </div>
     <div class="col-7">

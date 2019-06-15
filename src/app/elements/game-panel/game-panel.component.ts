@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FetchDataService} from '../../services/fetch-data.service';
 import {Letter} from '../../models/Letter';
 import {GameManagerService} from '../../services/game-manager.service';
+import {AuthManagerService} from '../../services/auth-manager.service';
 
 @Component({
   selector: 'app-game-panel',
@@ -10,7 +11,9 @@ import {GameManagerService} from '../../services/game-manager.service';
 })
 export class GamePanelComponent implements OnInit {
 
-  constructor(public gameManager: GameManagerService) {
+  @Input() points: Map<string, number>;
+
+  constructor(public gameManager: GameManagerService, public authManager: AuthManagerService) {
 
   }
 

@@ -6,6 +6,7 @@ import {GameDTO} from '../models/api/GameDTO';
 import {AuthManagerService} from './auth-manager.service';
 import {PlayerStateDTO} from '../models/api/PlayerStateDTO';
 import {UtilsService} from './utils.service';
+import {EnemyPoints} from '../models/EnemyPoints';
 
 @Injectable({
   providedIn: 'root'
@@ -35,9 +36,31 @@ export class GameManagerService {
     return map;
   }
 
-  initGame(game: GameDTO) {
+  initGame(game: GameDTO, points: Map<string, number>) {
     this.initBoard();
     this.initPool(this.utils.charactersToLetters(this.getThisPlayer(game).characters));
+    this.initPoints(game, points);
+  }
+
+  initPoints(game: GameDTO, points: Map<string, number>) {
+    for (const playerState of game.players) {
+      points.set(playerState.player.nickname, playerState.totalPoints);
+    }
+  }
+
+  updateGame(game: GameDTO, points: Map<string, number>) {
+    this.updateBoardState(game.boardState);
+    this.initPool(this.utils.charactersToLetters(this.getThisPlayer(game).characters));
+    this.initPoints(game, points);
+  }
+
+  updateBoardState(boardStateMap) {
+    this.initBoard();
+    Object.keys(boardStateMap).forEach(
+      key => {
+        this.gameBoard[key.charCodeAt(0) - 65][+key.substr(1) - 1] = new Letter(boardStateMap[key]);
+      }
+    );
   }
 
   private getThisPlayer(game: GameDTO): PlayerStateDTO {
@@ -98,9 +121,11 @@ export class GameManagerService {
 
   move(game: GameDTO) {
     this.fetchDataService.makeMove(game.name, this.gameBoardToMap()).subscribe(
-      next => {},
+      next => {
+      },
       error => console.log('error: ', error),
-      () => {}
+      () => {
+      }
     );
   }
 
@@ -116,4 +141,6 @@ export class GameManagerService {
     }
     return isMyMove;
   }
+
+
 }

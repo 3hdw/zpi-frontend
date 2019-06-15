@@ -1,8 +1,8 @@
-<div>
-  <h3>Twój wynik: 0</h3>
-</div>
-<div>
-  <h3>Wynik przeciwnika: 0</h3>
+<h2>Punkty: </h2>
+<div *ngFor="let entry of points | keyvalue">
+  <h3>
+    {{entry.key===authManager.userName?'Ty':entry.key}}: <b>{{entry.value}}</b>
+  </h3>
 </div>
 <div>
   <button class="btn btn-danger" (click)="reset()">Cofnij ruch</button>

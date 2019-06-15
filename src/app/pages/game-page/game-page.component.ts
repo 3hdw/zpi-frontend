@@ -8,6 +8,8 @@ import {AuthManagerService} from '../../services/auth-manager.service';
 import {Subscription} from 'rxjs';
 import {WebSocketService} from '../../services/web-socket.service';
 import {SocketMessage} from '../../models/api/SocketMessage';
+import {init} from 'protractor/built/launcher';
+import {EnemyPoints} from '../../models/EnemyPoints';
 
 @Component({
   selector: 'app-game-page',
@@ -19,6 +21,9 @@ export class GamePageComponent implements OnInit {
   private game: GameDTO = null;
   isMyMove = false;
   private subscription: Subscription;
+  private init = -1;
+
+  points: Map<string, number> = new Map<string, number>();
 
   constructor(public gameManager: GameManagerService,
               private shareDataService: ShareDataService,
@@ -31,7 +36,7 @@ export class GamePageComponent implements OnInit {
 
   ngOnInit() {
     this.game = this.shareDataService.game;
-    this.gameManager.initGame(this.game);
+    this.gameManager.initGame(this.game, this.points);
     this.isMyMove = this.gameManager.isMyMove(this.game);
     this.initSocketConnection();
   }
@@ -46,9 +51,14 @@ export class GamePageComponent implements OnInit {
 
   private handleSocketMessage(socketMessage: string) {
     if (socketMessage) {
-      console.log('socket message', socketMessage);
+      console.log('socket message fst', socketMessage);
       const socketMsg: SocketMessage = JSON.parse(socketMessage);
       this.isMyMove = this.gameManager.isMyMove(socketMsg.body);
+      if (this.init !== -1) {
+        this.gameManager.updateGame(socketMsg.body, this.points);
+      } else {
+        this.init = 1;
+      }
     }
   }
 
