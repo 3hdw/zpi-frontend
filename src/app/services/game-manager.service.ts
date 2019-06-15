@@ -120,13 +120,26 @@ export class GameManagerService {
   }
 
   move(game: GameDTO) {
-    this.fetchDataService.makeMove(game.name, this.gameBoardToMap()).subscribe(
+    this.buildMove();
+    this.fetchDataService.makeMove(game.name, this.buildMove()).subscribe(
       next => {
+        this.unconfirmedLetters = [];
+        this.unconfirmedCords = [];
       },
-      error => console.log('error: ', error),
+      error => console.log('MAKE MOVE ERROR: ', error),
       () => {
       }
     );
+  }
+
+  buildMove(): Map<string, string> {
+    const move: Map<string, string> = new Map<string, string>();
+    for (let i = 0; i < this.unconfirmedCords.length; i++) {
+      move.set(String.fromCharCode(65 + this.unconfirmedCords[i].first).concat((this.unconfirmedCords[i].second + 1).toString())
+        , this.unconfirmedLetters[i].character);
+    }
+    console.log('ZBUDOWANY MOVE: ', move);
+    return move;
   }
 
   isMyMove(game: GameDTO) {
