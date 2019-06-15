@@ -12,8 +12,7 @@ export class SocketInterceptorService implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log(req.url);
-    console.log(req);
+    console.log('Wysylanie requesta na adres:', req.url, 'body: ', req.body);
     // req = req.clone({
     //   setHeaders: {
     //     Authorization: this.authManager.basicToken

@@ -51,7 +51,7 @@ export class GamePageComponent implements OnInit {
 
   private handleSocketMessage(socketMessage: string) {
     if (socketMessage) {
-      console.log('socket message fst', socketMessage);
+      console.log('TO DOSTAJE PO WYKONANIU RUCHU: ', socketMessage);
       const socketMsg: SocketMessage = JSON.parse(socketMessage);
       this.isMyMove = this.gameManager.isMyMove(socketMsg.body);
       if (this.init !== -1) {
