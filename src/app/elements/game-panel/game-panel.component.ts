@@ -13,12 +13,18 @@ export class GamePanelComponent implements OnInit {
 
   @Input() points: Map<string, number>;
   @Input() turnName: string;
+  failInfo: string;
 
   constructor(public gameManager: GameManagerService, public authManager: AuthManagerService) {
 
   }
 
   ngOnInit() {
+    this.gameManager.emitter.subscribe(
+      next => {
+        this.failInfo = next.failInfo;
+      }
+    );
   }
 
   dragStart(event, block, item: Letter) {
@@ -38,6 +44,7 @@ export class GamePanelComponent implements OnInit {
   }
 
   reset() {
+    this.failInfo = null;
     for (let i = 0; i < this.gameManager.letterPool.length; i++) {
       if (this.gameManager.letterPool[i] === null) {
         const block = this.gameManager.getUnconfirmedBlocks().pop();
@@ -52,7 +59,7 @@ export class GamePanelComponent implements OnInit {
   }
 
   onMove() {
+    this.failInfo = null;
     this.gameManager.move();
   }
-
 }

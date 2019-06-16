@@ -16,7 +16,6 @@ import {AuthManagerService} from '../../services/auth-manager.service';
 export class GamePageComponent implements OnInit {
 
   private game: GameDTO = null;
-  isMyMove = false;
   private subscription: Subscription;
   private init = -1;
   turnName = '';
@@ -33,7 +32,6 @@ export class GamePageComponent implements OnInit {
     this.game = this.shareDataService.game;
     this.gameManager.gameName = this.game.name;
     this.gameManager.initGame(this.game, this.points);
-    this.isMyMove = this.gameManager.isMyMove(this.game);
     this.turnName = this.gameManager.getTurnName(this.game);
     this.initSocketConnection();
   }
@@ -50,7 +48,6 @@ export class GamePageComponent implements OnInit {
     if (socketMessage) {
       console.log('TO DOSTAJE PO WYKONANIU RUCHU: ', socketMessage);
       const socketMsg: SocketMessage = JSON.parse(socketMessage);
-      this.isMyMove = this.gameManager.isMyMove(socketMsg.body);
       if (this.init !== -1) {
         this.gameManager.updateGame(socketMsg.body, this.points);
         this.turnName = this.gameManager.getTurnName(socketMsg.body);
@@ -65,7 +62,7 @@ export class GamePageComponent implements OnInit {
     for (const domPlayer of Array.from(document.getElementsByClassName('player'))) {
       for (const nameDiv of Array.from(domPlayer.getElementsByClassName('name-box'))) {
         if (nameDiv.innerHTML === this.turnName || (this.turnName === this.authManager.userName && nameDiv.innerHTML === 'Ty')) {
-          domPlayer.className += ' active';
+          domPlayer.className += ' active-box';
         } else {
           domPlayer.className = 'player';
         }

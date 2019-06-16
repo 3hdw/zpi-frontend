@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {FetchDataService} from './fetch-data.service';
 import {Letter} from '../models/Letter';
 import {Pair} from '../models/Pair';
@@ -18,6 +18,8 @@ export class GameManagerService {
   private unconfirmedCords: Pair<number>[] = [];
   private isCorrectDraggable = false;
   gameName = '';
+
+  emitter: EventEmitter<Object> = new EventEmitter<Object>();
 
   constructor(private fetchDataService: FetchDataService,
               private authManager: AuthManagerService,
@@ -126,7 +128,10 @@ export class GameManagerService {
         this.unconfirmedLetters = [];
         this.unconfirmedCords = [];
       },
-      error => console.log('MAKE MOVE ERROR: ', error),
+      error => {
+        console.log('MAKE MOVE ERROR: ', error);
+        this.emitter.emit({failInfo: 'Zły ruch'});
+      },
       () => {
       }
     );

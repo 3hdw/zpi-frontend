@@ -11,7 +11,7 @@
     <h3>Ruch: {{turnName === authManager.userName ? 'Twój ruch' : turnName}}</h3>
   </div>
   <div style="display: inline-block; position: relative">
-    <app-loading-div *ngIf="turnName!==this.authManager.userName"></app-loading-div>
+    <app-loading-div *ngIf="this.turnName!==this.authManager.userName"></app-loading-div>
     <div class="button-panel">
       <div>
         <button class="btn btn-danger" (click)="reset()">Cofnij ruch</button>
@@ -33,6 +33,9 @@
         </tr>
         </tbody>
       </table>
+    </div>
+    <div *ngIf="failInfo!==null" style="margin-top: 10px">
+      <h3 class="text-danger">{{failInfo}}</h3>
     </div>
   </div>
 </div>
