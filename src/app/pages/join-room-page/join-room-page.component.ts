@@ -25,10 +25,15 @@ export class JoinRoomPageComponent implements OnInit {
     this.fetchData();
   }
 
+  clearEmptyLobbies() {
+    this.data = this.data.filter(e => e[1].length > 0);
+  }
+
   private fetchData() {
     this.fetchDataService.getLobbies().subscribe(
       next => {
         this.data = this.utils.extractDataFromLobbies(next);
+        this.clearEmptyLobbies();
       },
       error => {
       },
