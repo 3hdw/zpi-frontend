@@ -66,6 +66,7 @@ export class LobbyPageComponent extends CanDeactivate implements OnInit, OnDestr
   ngOnDestroy() {
     this.subscription.unsubscribe();
     this.webSocket.onDestroy();
+    this.webSocket = null;
     if (!this.canDeactivate()) {
       this.cleanUp();
     }
@@ -85,6 +86,7 @@ export class LobbyPageComponent extends CanDeactivate implements OnInit, OnDestr
   }
 
   private onCreateInit() {
+
     this.fetchDataService.createLobby().subscribe(
       next => {
         this.data = this.utils.extractDataFromLobby(next);
@@ -119,16 +121,21 @@ export class LobbyPageComponent extends CanDeactivate implements OnInit, OnDestr
   }
 
   private handleSocketMessage(socketMessage: string) {
-    if (socketMessage) {
-      const socketMsg: SocketMessage = JSON.parse(socketMessage);
-      if (socketMsg.header === 'CHANGE') {
-        this.refreshLobby();
-      } else if (socketMsg.header === 'START') {
-        if (socketMsg.body) {
-          this.onStartLobby(socketMsg.body);
+    try {
+      if (socketMessage) {
+        const socketMsg: SocketMessage = JSON.parse(socketMessage);
+        if (socketMsg.header === 'CHANGE') {
+          this.refreshLobby();
+        } else if (socketMsg.header === 'START') {
+          if (socketMsg.body) {
+            console.log('to', socketMsg);
+            this.onStartLobby(socketMsg.body);
+          }
+        } else {
         }
-      } else {
       }
+    } catch (e) {
+
     }
   }
 
@@ -145,9 +152,12 @@ export class LobbyPageComponent extends CanDeactivate implements OnInit, OnDestr
   }
 
   private onStartLobby(gameDto: GameDTO) {
-    this.isStarted = true;
-    this.shareDataService.game = gameDto;
-    this.router.navigate(['play']);
+    if (this.webSocket.isSubscribed) {
+      this.webSocket.isSubscribed = false;
+      this.isStarted = true;
+      this.shareDataService.game = gameDto;
+      this.router.navigate(['play']);
+    }
   }
 
   canDeactivate(): boolean {

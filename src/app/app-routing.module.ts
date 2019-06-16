@@ -21,7 +21,7 @@ const routes: Routes = [
   {path: 'login', component: LoginPageComponent},
   {path: 'lobby/:name', component: LobbyPageComponent, canActivate: [AuthGuardService], canDeactivate: [DeactivateGuardService]},
   {path: 'register', component: RegisterPageComponent},
-  {path: 'play', component: GamePageComponent, canActivate: [AuthGuardService]},
+  {path: 'play', component: GamePageComponent, canActivate: [AuthGuardService], canDeactivate: [DeactivateGuardService]},
   {path: 'player-games', component: PlayerGamesPageComponent, canActivate: [AuthGuardService]},
   {path: 'test', component: TestPageComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -29,8 +29,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {
 }

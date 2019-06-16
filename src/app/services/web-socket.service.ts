@@ -1,22 +1,21 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AddressStorageService} from './address-storage.service';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import {AuthManagerService} from './auth-manager.service';
 import {BehaviorSubject} from 'rxjs';
-import {SocketMessage} from '../models/api/SocketMessage';
 import {v4 as uuid} from 'uuid';
-import {audit} from 'rxjs/operators';
-import {HttpHeaders} from '@angular/common/http';
-import {GameDTO} from '../models/api/GameDTO';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebSocketService {
   private stompClient;
+  private ws;
   private socketMessage = new BehaviorSubject<string>('');
   socketMessage$ = this.socketMessage.asObservable();
+  private subscription;
+  isSubscribed = false;
 
   constructor(private addressStorage: AddressStorageService, private authManager: AuthManagerService) {
   }
@@ -24,15 +23,21 @@ export class WebSocketService {
 
   connectToLobbyWebSocket(lobbyName: string): void {
     const that = this;
-    const ws = new SockJS(this.addressStorage.apiAddress + '/socket', null, {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    this.ws = new SockJS(this.addressStorage.apiAddress + '/socket', null, {
       sessionId: function (): string {
         return that.authManager.playerId + ':' + lobbyName + ':' + uuid();
       }
     });
-    this.stompClient = Stomp.over(ws);
-     this.stompClient.debug = null;
+    this.stompClient = Stomp.over(this.ws);
+    this.stompClient.debug = null;
+
     this.stompClient.connect({}, function () {
       that.stompClient.subscribe('/lobby/' + lobbyName, (message) => {
+        that.isSubscribed = true;
         if (message.body) {
           that.socketMessage.next(message.body);
         }
@@ -42,12 +47,21 @@ export class WebSocketService {
 
 
   connectToGameSocket(gameName: string): void {
-    const that = this;
-    const ws = new SockJS(this.addressStorage.apiAddress + '/socket');
-    this.stompClient = Stomp.over(ws);
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    this.ws = new SockJS(this.addressStorage.apiAddress + '/socket');
+    this.stompClient = Stomp.over(this.ws);
     this.stompClient.debug = null;
+    this.subLobby(gameName);
+    console.log('@2222222222222222@@@ ', this.ws.readyState);
+  }
+
+  subLobby(gameName: string) {
+    // console.log('STATUS: ', this.ws.readyState);
+    const that = this;
     this.stompClient.connect({}, function () {
-      that.stompClient.subscribe('/game/' + gameName, (message) => {
+      that.subscription = that.stompClient.subscribe('/game/' + gameName, (message) => {
         if (message.body) {
           that.socketMessage.next(message.body);
         }
@@ -55,9 +69,17 @@ export class WebSocketService {
     });
   }
 
+
   onDestroy() {
-    if (this.stompClient) {
+    try {
+      this.subscription.unsubscribe();
+      this.stompClient.unsubscribe();
       this.stompClient.disconnect();
+      this.ws.close();
+      this.stompClient = null;
+      this.ws = null;
+    } catch (e) {
+
     }
   }
 }

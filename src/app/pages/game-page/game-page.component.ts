@@ -7,6 +7,7 @@ import {Subscription} from 'rxjs';
 import {WebSocketService} from '../../services/web-socket.service';
 import {SocketMessage} from '../../models/api/SocketMessage';
 import {AuthManagerService} from '../../services/auth-manager.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-game-page',
@@ -25,7 +26,8 @@ export class GamePageComponent implements OnInit {
   constructor(public gameManager: GameManagerService,
               private shareDataService: ShareDataService,
               private socketService: WebSocketService,
-              private authManager: AuthManagerService) {
+              private authManager: AuthManagerService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -51,21 +53,8 @@ export class GamePageComponent implements OnInit {
       if (this.init !== -1) {
         this.gameManager.updateGame(socketMsg.body, this.points);
         this.turnName = this.gameManager.getTurnName(socketMsg.body);
-        this.highlight();
       } else {
         this.init = 1;
-      }
-    }
-  }
-
-  highlight() {
-    for (const domPlayer of Array.from(document.getElementsByClassName('player'))) {
-      for (const nameDiv of Array.from(domPlayer.getElementsByClassName('name-box'))) {
-        if (nameDiv.innerHTML === this.turnName || (this.turnName === this.authManager.userName && nameDiv.innerHTML === 'Ty')) {
-          domPlayer.className += ' active-box';
-        } else {
-          domPlayer.className = 'player';
-        }
       }
     }
   }
@@ -107,5 +96,16 @@ export class GamePageComponent implements OnInit {
     if (this.gameManager.checkDraggable()) {
       dropSpot.className = 'drop-spot';
     }
+  }
+
+  onQuit() {
+    this.subscription.unsubscribe();
+    this.socketService.onDestroy();
+    this.socketService = null;
+    this.router.navigate(['menu']);
+  }
+
+  canDeactivate() {
+    return false;
   }
 }
