@@ -55,3 +55,49 @@ td div{
 .active-box{
   border-color: #7bee6c;
 }
+
+.block{
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  max-width: 40px;
+  max-height: 40px;
+  padding-right: 2px;
+}
+
+.block-dl{
+  background-image: url("/assets/DL.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.block-tl{
+  background-image: url("/assets/TL.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.block-dw{
+  background-image: url("/assets/DW.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.block-tw{
+  background-image: url("/assets/TW.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.block-star{
+  background-image: url("/assets/STAR3.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.block-normal{
+  background-image: url("/assets/BG.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}

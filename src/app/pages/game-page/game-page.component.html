@@ -7,7 +7,7 @@
       <table>
         <tbody>
         <tr *ngFor="let tableRow of gameManager.gameBoard; let i = index">
-          <td *ngFor="let cell of tableRow; let j = index">
+          <td  *ngFor="let cell of tableRow; let j = index">
             <div #dropSpot class="drop-spot" (drop)="onDrop($event,dropSpot,i,j)"
                  (dragover)="onDragOver($event,dropSpot,i,j)"
                  (dragenter)="onDragEnter($event,dropSpot,i,j)"
