@@ -1,24 +1,38 @@
-<h2>Punkty: </h2>
-<div *ngFor="let entry of points | keyvalue">
-  <h3>
-    {{entry.key===authManager.userName?'Ty':entry.key}}: <b>{{entry.value}}</b>
-  </h3>
-</div>
-<div>
-  <button class="btn btn-danger" (click)="reset()">Cofnij ruch</button>
-</div>
-<div *ngIf="gameManager.letterPool.length>0">
-  <h3>Twoje literki: </h3>
-  <table>
-    <tbody>
-    <tr>
-      <td *ngFor="let item of gameManager.letterPool; let i = index">
-        <div class="visible" #block draggable="true" (dragstart)="dragStart($event,block,item)"
-             (dragend)="dragEnd($event, block, i)">
-          <app-scrabble-block *ngIf="item" [letter]="item"></app-scrabble-block>
-        </div>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+<div class="panel">
+  <div class="player" *ngFor="let entry of points | keyvalue">
+    <div class="name-box">
+      {{entry.key === authManager.userName ? 'Ty' : entry.key}}
+    </div>
+    <div class="point-box">
+      <b>{{entry.value}}</b> punktów
+    </div>
+  </div>
+  <div>
+    <h3>Ruch: {{turnName === authManager.userName ? 'Twój ruch' : turnName}}</h3>
+  </div>
+  <div style="display: inline-block; position: relative">
+    <app-loading-div *ngIf="turnName!==this.authManager.userName"></app-loading-div>
+    <div class="button-panel">
+      <div>
+        <button class="btn btn-danger" (click)="reset()">Cofnij ruch</button>
+      </div>
+      <div>
+        <button class="btn btn-primary" (click)="onMove()">Wykonaj ruch</button>
+      </div>
+    </div>
+    <div *ngIf="gameManager.letterPool.length>0" style="margin-top: 10px">
+      <table>
+        <tbody>
+        <tr>
+          <td *ngFor="let item of gameManager.letterPool; let i = index">
+            <div class="visible" #block draggable="true" (dragstart)="dragStart($event,block,item)"
+                 (dragend)="dragEnd($event, block, i)">
+              <app-scrabble-block *ngIf="item" [letter]="item"></app-scrabble-block>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

@@ -1,3 +1,35 @@
+.player{
+  display: flex;
+  width: 230px;
+  height: 40px;
+  min-width: 230px;
+  min-height: 40px;
+  max-width: 230px;
+  max-height: 40px;
+  border: 3px solid #ccc;
+  border-radius: 16px;
+  margin: 10px;
+  padding: 5px;
+}
+
+.name-box{
+  width: 100px;
+  border-right: 3px solid #ccc;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.point-box{
+  padding-left: 5px;
+}
+
+.active-box{
+  border-color: #7bee6c;
+}
+
+
+
+
 .page{
   display: grid;
   grid-template-columns: 15% auto 15%;

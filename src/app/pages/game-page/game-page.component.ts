@@ -3,13 +3,10 @@ import {Letter} from '../../models/Letter';
 import {GameManagerService} from '../../services/game-manager.service';
 import {ShareDataService} from '../../services/share-data.service';
 import {GameDTO} from '../../models/api/GameDTO';
-import {FetchDataService} from '../../services/fetch-data.service';
-import {AuthManagerService} from '../../services/auth-manager.service';
 import {Subscription} from 'rxjs';
 import {WebSocketService} from '../../services/web-socket.service';
 import {SocketMessage} from '../../models/api/SocketMessage';
-import {init} from 'protractor/built/launcher';
-import {EnemyPoints} from '../../models/EnemyPoints';
+import {AuthManagerService} from '../../services/auth-manager.service';
 
 @Component({
   selector: 'app-game-page',
@@ -22,22 +19,22 @@ export class GamePageComponent implements OnInit {
   isMyMove = false;
   private subscription: Subscription;
   private init = -1;
+  turnName = '';
 
   points: Map<string, number> = new Map<string, number>();
 
   constructor(public gameManager: GameManagerService,
               private shareDataService: ShareDataService,
-              private socketService: WebSocketService) {
-  }
-
-  onMove() {
-    this.gameManager.move(this.game);
+              private socketService: WebSocketService,
+              private authManager: AuthManagerService) {
   }
 
   ngOnInit() {
     this.game = this.shareDataService.game;
+    this.gameManager.gameName = this.game.name;
     this.gameManager.initGame(this.game, this.points);
     this.isMyMove = this.gameManager.isMyMove(this.game);
+    this.turnName = this.gameManager.getTurnName(this.game);
     this.initSocketConnection();
   }
 
@@ -56,8 +53,22 @@ export class GamePageComponent implements OnInit {
       this.isMyMove = this.gameManager.isMyMove(socketMsg.body);
       if (this.init !== -1) {
         this.gameManager.updateGame(socketMsg.body, this.points);
+        this.turnName = this.gameManager.getTurnName(socketMsg.body);
+        this.highlight();
       } else {
         this.init = 1;
+      }
+    }
+  }
+
+  highlight() {
+    for (const domPlayer of Array.from(document.getElementsByClassName('player'))) {
+      for (const nameDiv of Array.from(domPlayer.getElementsByClassName('name-box'))) {
+        if (nameDiv.innerHTML === this.turnName || (this.turnName === this.authManager.userName && nameDiv.innerHTML === 'Ty')) {
+          domPlayer.className += ' active';
+        } else {
+          domPlayer.className = 'player';
+        }
       }
     }
   }

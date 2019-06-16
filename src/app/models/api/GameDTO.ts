@@ -4,7 +4,8 @@ export class GameDTO {
   constructor(private _players: PlayerStateDTO[],
               private _boardState: Map<string, string>,
               private _nextPlayer: number,
-              private _name: string) {
+              private _name: string,
+              private _nextPlayerName: string) {
   }
 
   get players(): PlayerStateDTO[] {
@@ -21,5 +22,10 @@ export class GameDTO {
 
   get name(): string {
     return this._name;
+  }
+
+
+  get nextPlayerName(): string {
+    return this._nextPlayerName;
   }
 }

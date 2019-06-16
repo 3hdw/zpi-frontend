@@ -17,6 +17,7 @@ export class GameManagerService {
   private unconfirmedLetters: Letter[] = [];
   private unconfirmedCords: Pair<number>[] = [];
   private isCorrectDraggable = false;
+  gameName = '';
 
   constructor(private fetchDataService: FetchDataService,
               private authManager: AuthManagerService,
@@ -119,9 +120,8 @@ export class GameManagerService {
     this.unconfirmedCords.push(pair);
   }
 
-  move(game: GameDTO) {
-    this.buildMove();
-    this.fetchDataService.makeMove(game.name, this.buildMove()).subscribe(
+  move() {
+    this.fetchDataService.makeMove(this.gameName, this.buildMove()).subscribe(
       next => {
         this.unconfirmedLetters = [];
         this.unconfirmedCords = [];
@@ -143,17 +143,11 @@ export class GameManagerService {
   }
 
   isMyMove(game: GameDTO) {
-    let isMyMove = false;
-    for (let i = 0; i < game.players.length; i++) {
-      if (game.players[i].player.nickname === this.authManager.userName) {
-        if (game.nextPlayer !== i) {
-          isMyMove = true;
-          break;
-        }
-      }
-    }
-    return isMyMove;
+    return game.nextPlayerName === this.authManager.userName;
   }
 
 
+  getTurnName(game: GameDTO): string {
+    return game.nextPlayerName;
+  }
 }

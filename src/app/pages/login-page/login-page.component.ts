@@ -54,7 +54,7 @@ export class LoginPageComponent implements OnInit {
     this.isLoading = true;
     this.guestForm = this.formBuilder.group({
       email: [''],
-      nickname: ['gosc' + uuid(), Validators.required],
+      nickname: ['gosc' + uuid().substr(0, 7), Validators.required],
       password: ['123', Validators.required],
       id: [0]
     });

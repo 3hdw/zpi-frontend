@@ -12,6 +12,7 @@ import {AuthManagerService} from '../../services/auth-manager.service';
 export class GamePanelComponent implements OnInit {
 
   @Input() points: Map<string, number>;
+  @Input() turnName: string;
 
   constructor(public gameManager: GameManagerService, public authManager: AuthManagerService) {
 
@@ -49,4 +50,9 @@ export class GamePanelComponent implements OnInit {
       this.gameManager.resetUnconfirmed();
     }
   }
+
+  onMove() {
+    this.gameManager.move();
+  }
+
 }

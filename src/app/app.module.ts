@@ -23,6 +23,7 @@ import { PlayerGamesPageComponent } from './pages/player-games-page/player-games
 import { LobbyPageComponent } from './pages/lobby-page/lobby-page.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {SocketInterceptorService} from './services/socket-interceptor.service';
+import { LoadingDivComponent } from './elements/loading-div/loading-div.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import {SocketInterceptorService} from './services/socket-interceptor.service';
     RegisterPageComponent,
     PlayerGamesPageComponent,
     LobbyPageComponent,
+    LoadingDivComponent,
   ],
   imports: [
     BrowserModule,
