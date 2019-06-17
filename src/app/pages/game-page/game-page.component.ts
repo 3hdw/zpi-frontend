@@ -8,6 +8,7 @@ import {WebSocketService} from '../../services/web-socket.service';
 import {SocketMessage} from '../../models/api/SocketMessage';
 import {AuthManagerService} from '../../services/auth-manager.service';
 import {Router} from '@angular/router';
+import {MatSnackBarConfig} from '@angular/material';
 
 @Component({
   selector: 'app-game-page',
@@ -100,7 +101,9 @@ export class GamePageComponent implements OnInit {
 
   onQuit() {
     this.subscription.unsubscribe();
-    this.socketService.onDestroy();
+    if (this.socketService !== null && this.socketService !== undefined) {
+      this.socketService.onDestroy();
+    }
     this.socketService = null;
     this.router.navigate(['menu']);
   }

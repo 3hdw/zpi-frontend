@@ -20,8 +20,8 @@
         <button class="btn btn-primary" (click)="onMove()">Wykonaj ruch</button>
       </div>
     </div>
-    <div *ngIf="gameManager.letterPool.length>0" style="margin-top: 10px">
-      <table>
+    <div *ngIf="gameManager.letterPool.length>0" style="margin-top: 60px">
+      <table class="table-bordered">
         <tbody>
         <tr>
           <td *ngFor="let item of gameManager.letterPool; let i = index">
@@ -34,11 +34,8 @@
         </tbody>
       </table>
     </div>
-    <div *ngIf="failInfo!==null" style="margin-top: 10px">
-      <h3 class="text-danger">{{failInfo}}</h3>
-    </div>
   </div>
-  <div style="margin-top: 30px; display: flex;">
+  <div style="margin-top: 90px; display: flex;">
     <div style="padding-right: 10px">
       <h3>Legenda: </h3>
     </div>

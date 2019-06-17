@@ -101,3 +101,10 @@ td div{
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
+
+.holder{
+  background-color: #292312;
+  background-image: url("/assets/wood.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}

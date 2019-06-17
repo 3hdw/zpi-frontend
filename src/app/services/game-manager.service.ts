@@ -7,6 +7,7 @@ import {AuthManagerService} from './auth-manager.service';
 import {PlayerStateDTO} from '../models/api/PlayerStateDTO';
 import {UtilsService} from './utils.service';
 import {EnemyPoints} from '../models/EnemyPoints';
+import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +20,10 @@ export class GameManagerService {
   private isCorrectDraggable = false;
   gameName = '';
 
-  emitter: EventEmitter<Object> = new EventEmitter<Object>();
-
   constructor(private fetchDataService: FetchDataService,
               private authManager: AuthManagerService,
-              private utils: UtilsService) {
+              private utils: UtilsService,
+              private _snackBar: MatSnackBar) {
   }
 
   gameBoardToMap() {
@@ -127,15 +127,31 @@ export class GameManagerService {
       next => {
         this.unconfirmedLetters = [];
         this.unconfirmedCords = [];
+        this.openSnackBar(next.players.find(playerState => playerState.player.nickname === this.authManager.userName).lastMovePoints);
       },
       error => {
         console.log('MAKE MOVE ERROR: ', error);
-        this.emitter.emit({failInfo: 'Zły ruch'});
+        this.openErrorSnackBar();
       },
       () => {
       }
     );
   }
+
+  openSnackBar(points: number) {
+    const config = new MatSnackBarConfig();
+    config.duration = 3000;
+    config.verticalPosition = 'top';
+    config.panelClass = 'snackBar';
+    this._snackBar.open('Gratulacje! Zdobywasz: ' + points + ' punktów!', 'X', config);
+  }
+
+  openErrorSnackBar(){
+    const config = new MatSnackBarConfig();
+    config.duration = 8000;
+    config.verticalPosition = 'top';
+    config.panelClass = 'errorSnackBar';
+    this._snackBar.open('Wykonałeś niedozwolony ruch!', 'X', config);  }
 
   buildMove(): Map<string, string> {
     const move: Map<string, string> = new Map<string, string>();

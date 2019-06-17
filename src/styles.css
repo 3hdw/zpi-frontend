@@ -1,3 +1,5 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
 #main {
   min-height: 100vh;
 }
@@ -32,4 +34,18 @@
 
 .mtop-20 {
   margin: 15rem 0 0 0;
+}
+
+.snackBar{
+  width: 100px;
+  height: 100px;
+  font-weight: bold;
+  color: #7bee6c;
+}
+
+.errorSnackBar{
+  width: 100px;
+  height: 100px;
+  font-weight: bold;
+  color: #dc3545;
 }

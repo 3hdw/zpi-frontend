@@ -24,6 +24,8 @@ import { LobbyPageComponent } from './pages/lobby-page/lobby-page.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {SocketInterceptorService} from './services/socket-interceptor.service';
 import { LoadingDivComponent } from './elements/loading-div/loading-div.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -48,11 +50,13 @@ import { LoadingDivComponent } from './elements/loading-div/loading-div.componen
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     NgxPaginationModule,
+    MatSnackBarModule
   ],
   providers: [
     {

@@ -3,7 +3,6 @@ import {AddressStorageService} from './address-storage.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {PlayerDTO} from '../models/api/PlayerDTO';
 import {Observable} from 'rxjs';
-import {b} from '@angular/core/src/render3';
 
 @Injectable({
   providedIn: 'root'
