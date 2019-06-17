@@ -67,44 +67,44 @@ td div{
 }
 
 .block-dl{
-  background-image: url("/assets/DL.png");
+  background-image: url("/zpi-frontend/assets/DL.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
 
 .block-tl{
-  background-image: url("/assets/TL.png");
+  background-image: url("/zpi-frontend/assets/TL.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
 
 .block-dw{
-  background-image: url("/assets/DW.png");
+  background-image: url("/zpi-frontend/assets/DW.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
 
 .block-tw{
-  background-image: url("/assets/TW.png");
+  background-image: url("/zpi-frontend/assets/TW.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
 
 .block-star{
-  background-image: url("/assets/STAR3.png");
+  background-image: url("/zpi-frontend/assets/STAR3.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
 
 .block-normal{
-  background-image: url("/assets/BG.png");
+  background-image: url("/zpi-frontend/assets/BG.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
 
 .holder{
   background-color: #292312;
-  background-image: url("/assets/wood.png");
+  background-image: url("/zpi-frontend/assets/wood.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
