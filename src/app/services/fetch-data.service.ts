@@ -27,8 +27,37 @@ export class FetchDataService {
     move.forEach((value: string, key: string) => {
       dtoMap[key] = value;
     });
-
     return this.http.patch<GameDTO>(this.addressStorage.apiAddress + '/games/' + gameName + '/move?playerId=' + this.authManager.playerId, dtoMap, httpOptions);
+  }
+
+  swapLetters(gameName: string, characters: string[]): Observable<GameDTO> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.authManager.basicToken
+      })
+    };
+    return this.http.patch<GameDTO>(this.addressStorage.apiAddress + '/games/' + gameName + '/tradeLetters?playerId=' + this.authManager.playerId, characters, httpOptions);
+  }
+
+  getHint(gameName: string): Observable<Map<string, string>> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.authManager.basicToken
+      })
+    };
+    return this.http.get<Map<string, string>>(this.addressStorage.apiAddress + '/games/' + gameName + '/hint', httpOptions);
+  }
+
+  addAi(gameName: string): Observable<GameDTO> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.authManager.basicToken
+      })
+    };
+    return this.http.patch<GameDTO>(this.addressStorage.apiAddress + '/games/' + gameName + '/addAI', null, httpOptions);
   }
 
   getLobbies(): Observable<LobbyDTO[]> {

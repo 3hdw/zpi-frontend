@@ -1,3 +1,4 @@
+<app-loading-screen *ngIf="isLoading"></app-loading-screen>
 <div class="container-fluid">
   <div class="row menu-row justify-content-center">
     <button class="btn btn-danger" routerLink="/create">Stwórz pokój</button>
@@ -6,6 +7,6 @@
     <button class="btn btn-danger" routerLink="/join">Dołącz do pokoju</button>
   </div>
   <div class="row menu-row justify-content-center">
-    <button class="btn btn-danger" routerLink="/player-games">Twoje gry</button>
+    <button class="btn btn-danger" (click)="onPlayVsAi()">Graj z komputerem</button>
   </div>
 </div>

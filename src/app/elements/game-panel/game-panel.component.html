@@ -17,6 +17,16 @@
         <button class="btn btn-danger" (click)="reset()">Cofnij ruch</button>
       </div>
       <div>
+        <button class="btn btn-info" (click)="onSwap()">
+          Wymień litery
+        </button>
+      </div>
+      <div *ngIf="this.gameManager.isAi">
+        <button class="btn btn-info" (click)="this.gameManager.hint()">
+          Podpowiedź
+        </button>
+      </div>
+      <div>
         <button class="btn btn-primary" (click)="onMove()">Wykonaj ruch</button>
       </div>
     </div>

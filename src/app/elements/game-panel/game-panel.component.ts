@@ -54,4 +54,8 @@ export class GamePanelComponent implements OnInit {
   onMove() {
     this.gameManager.move();
   }
+
+  onSwap(){
+    this.gameManager.swap();
+  }
 }

@@ -7,7 +7,7 @@ import {Subscription} from 'rxjs';
 import {WebSocketService} from '../../services/web-socket.service';
 import {SocketMessage} from '../../models/api/SocketMessage';
 import {AuthManagerService} from '../../services/auth-manager.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {MatSnackBarConfig} from '@angular/material';
 
 @Component({
@@ -28,10 +28,16 @@ export class GamePageComponent implements OnInit {
               private shareDataService: ShareDataService,
               private socketService: WebSocketService,
               private authManager: AuthManagerService,
-              private router: Router) {
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
+    if (this.route.snapshot.paramMap.get('isAi')) {
+      this.gameManager.isAi = true;
+    } else {
+      this.gameManager.isAi = false;
+    }
     this.game = this.shareDataService.game;
     this.gameManager.gameName = this.game.name;
     this.gameManager.initGame(this.game, this.points);
@@ -51,8 +57,14 @@ export class GamePageComponent implements OnInit {
     if (socketMessage) {
       console.log('TO DOSTAJE PO WYKONANIU RUCHU: ', socketMessage);
       const socketMsg: SocketMessage = JSON.parse(socketMessage);
+      if (this.gameManager.isAi === true) {
+        this.init = 1;
+      }
       if (this.init !== -1) {
         this.gameManager.updateGame(socketMsg.body, this.points);
+        if (this.gameManager.isAi && !this.gameManager.aiMoved) {
+          this.gameManager.aiMove();
+        }
         this.turnName = this.gameManager.getTurnName(socketMsg.body);
       } else {
         this.init = 1;
